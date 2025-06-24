@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lojinha</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-white text-black font-sans">
+
+ 
+  <header class="bg-white shadow sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+      <h1 class="text-3xl font-bold text-orange-600">Lojinha</h1>
+      <div class="flex items-center gap-6">
+        <button onclick="openLoginModal()" class="hover:underline text-sm">Entrar</button>
+        <button onclick="openCartModal()" aria-label="Abrir carrinho">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-black hover:text-orange-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h14l-1.35 6.75a1 1 0 01-.98.75H7.6a1 1 0 01-.98-.8L5 4H3" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  
+  <section class="bg-orange-50 py-12 text-center">
+    <div class="max-w-7xl mx-auto px-4">
+      <h2 class="text-4xl sm:text-5xl font-extrabold text-gray-900 mb-4">Descubra o estilo que combina com você</h2>
+      <p class="text-gray-600 mb-6 max-w-xl mx-auto">
+        Explore nossa coleção de roupas modernas, confortáveis e pensadas para todos os estilos.
+      </p>
+      <a href="#productGrid" class="bg-orange-600 text-white px-6 py-3 rounded hover:bg-orange-700 transition">Ver produtos</a>
+    </div>
+  </section>
+
+
+  <section class="py-6 bg-white">
+    <div class="max-w-2xl mx-auto px-4">
+      <input type="text" placeholder="Buscar produtos..." class="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-orange-500">
+    </div>
+  </section>
+
+ 
+  <section class="px-6 py-10 bg-gray-50">
+    <h2 class="text-2xl font-bold mb-6 text-center">Produtos em Destaque</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="productGrid"></div>
+  </section>
+
+ 
+  <div id="loginModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+    <div class="bg-white p-6 rounded-lg shadow-lg w-80">
+      <div class="flex justify-between items-center mb-4">
+        <h2 class="text-xl font-semibold">Login</h2>
+        <button onclick="closeLoginModal()" class="text-gray-500 hover:text-black text-lg">&times;</button>
+      </div>
+      <form onsubmit="submitLogin(event)">
+        <div class="mb-4">
+          <label for="email" class="block text-sm font-medium">Email</label>
+          <input type="email" id="email" class="w-full mt-1 p-2 border rounded" required>
+        </div>
+        <div class="mb-4">
+          <label for="password" class="block text-sm font-medium">Senha</label>
+          <input type="password" id="password" class="w-full mt-1 p-2 border rounded" required>
+        </div>
+        <button type="submit" class="w-full bg-black text-white py-2 rounded hover:bg-gray-800">Entrar</button>
+      </form>
+      <div class="my-4 flex items-center justify-center text-gray-400 text-sm">
+        <span class="border-b w-1/4"></span>
+        <span class="mx-2">ou</span>
+        <span class="border-b w-1/4"></span>
+      </div>
+      <div class="space-y-2">
+        <button class="w-full flex items-center justify-center gap-2 bg-red-600 text-white py-2 rounded hover:bg-red-700">
+          <img src="https://www.svgrepo.com/show/475656/google-color.svg" class="w-5 h-5">
+          Entrar com Google
+        </button>
+        <button class="w-full flex items-center justify-center gap-2 bg-blue-700 text-white py-2 rounded hover:bg-blue-800">
+          <img src="https://www.svgrepo.com/show/475633/facebook-color.svg" class="w-5 h-5">
+          Entrar com Facebook
+        </button>
+        <button class="w-full flex items-center justify-center gap-2 bg-gray-800 text-white py-2 rounded hover:bg-gray-900">
+          <img src="https://www.svgrepo.com/show/303267/microsoft.svg" class="w-5 h-5">
+          Entrar com Microsoft
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div id="cartModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+    <div class="bg-white p-6 rounded-lg shadow-lg w-96">
+      <div class="flex justify-between items-center mb-4">
+        <h2 class="text-xl font-semibold">Seu Carrinho</h2>
+        <button onclick="closeCartModal()" class="text-gray-500 hover:text-black text-lg">&times;</button>
+      </div>
+      <ul id="cartList" class="mb-4 max-h-64 overflow-y-auto"></ul>
+      <div class="flex flex-col space-y-2">
+        <button onclick="openCheckoutModal()" class="bg-orange-600 text-white py-2 rounded hover:bg-orange-700">Finalizar Compra</button>
+        <button onclick="closeCartModal()" class="bg-gray-800 text-white py-2 rounded hover:bg-gray-900">Fechar</button>
+      </div>
+    </div>
+  </div>
+
+ 
+  <div id="checkoutModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+    <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-lg">
+      <div class="flex justify-between items-center mb-4">
+        <h2 class="text-xl font-semibold">Finalizar Compra</h2>
+        <button onclick="closeCheckoutModal()" class="text-gray-500 hover:text-black text-lg">&times;</button>
+      </div>
+      <form onsubmit="submitCheckout(event)">
+        <div class="mb-4">
+          <h3 class="font-semibold mb-2">Itens:</h3>
+          <ul id="checkoutSummary" class="text-sm text-gray-700 list-disc ml-5"></ul>
+        </div>
+        <div class="mb-2">
+          <label class="block text-sm font-medium">Nome completo</label>
+          <input type="text" required class="w-full mt-1 p-2 border rounded">
+        </div>
+        <div class="mb-2">
+          <label class="block text-sm font-medium">Email</label>
+          <input type="email" required class="w-full mt-1 p-2 border rounded">
+        </div>
+        <div class="mb-2">
+          <label class="block text-sm font-medium">Endereço</label>
+          <textarea required class="w-full mt-1 p-2 border rounded"></textarea>
+        </div>
+        <div class="mb-4">
+          <label class="block text-sm font-medium">Forma de pagamento</label>
+          <select class="w-full p-2 border rounded">
+            <option>Cartão de Crédito</option>
+            <option>Pix</option>
+            <option>Boleto</option>
+          </select>
+        </div>
+        <button type="submit" class="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700">Confirmar Pedido</button>
+      </form>
+    </div>
+  </div>
+
+
+  <div id="productDetailModal" class="fixed inset-0 bg-white hidden flex-col md:flex-row z-50 overflow-auto">
+    <div class="w-full md:w-1/2 p-6 bg-gray-100 flex items-center justify-center">
+      <img id="detailImage" class="detail-image w-full max-w-md mx-auto rounded" alt="Detalhes do Produto">
+    </div>
+    <div class="w-full md:w-1/2 p-6 relative">
+      <button onclick="closeProductDetail()" class="absolute top-4 right-6 text-3xl text-gray-400 hover:text-black">&times;</button>
+      <h2 id="detailName" class="text-3xl font-bold mb-2"></h2>
+      <p id="detailDescription" class="text-gray-600 mb-4"></p>
+      <div class="text-yellow-500 mb-2">
+        ★★★★★ <span class="text-sm text-gray-500">(321 avaliações)</span>
+      </div>
+      <div class="mb-4">
+        <span class="block text-sm line-through text-gray-500">R$ <span id="originalPrice">0</span></span>
+        <span class="block text-3xl font-bold text-orange-600">R$ <span id="promoPrice">0</span></span>
+      </div>
+      <button onclick="buyNow()" class="mt-6 w-full bg-orange-600 text-white py-3 rounded hover:bg-orange-700 text-lg">
+        Adicionar ao carrinho
+      </button>
+    </div>
+  </div>
+
+
+  <script src="script.js"></script>
+</body>
+</html>
